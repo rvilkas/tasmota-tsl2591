@@ -80,8 +80,20 @@ void Tsl2591Show(bool json)
   if (tsl2591_valid) {
     char lux_str[10];
     dtostrf(tsl2591_lux, sizeof(lux_str)-1, 3, lux_str);
+
+    tsl2591Gain_t tsl2591gain = tsl.getGain();
+    char gain_str[10];
+    dtostrf(tsl2591gain, sizeof(gain_str)-1, 3, gain_str);
+
+    tsl2591IntegrationTime_t tsl2591integrationtime = tsl.getTiming();
+    char integrationtime_str[10];
+    dtostrf(tsl2591integrationtime, sizeof(integrationtime_str)-1, 3, integrationtime_str);
+
     if (json) {
-      ResponseAppend_P(PSTR(",\"TSL2591\":{\"" D_JSON_ILLUMINANCE "\":%s}"), lux_str);
+      //ResponseAppend_P(PSTR(",\"TSL2591\":{\"" D_JSON_ILLUMINANCE "\":%s}"), lux_str);
+      ResponseAppend_P(PSTR(",\"TSL2591\":{\"" D_JSON_ILLUMINANCE "\":%s"), lux_str);
+      ResponseAppend_P(PSTR(",\"Gain\":%s"), gain_str);
+      ResponseAppend_P(PSTR(",\"IntegrationTimeMs\":%s}"), integrationtime_str);
 #ifdef USE_DOMOTICZ
       if (0 == TasmotaGlobal.tele_period) { DomoticzSensor(DZ_ILLUMINANCE, tsl2591_lux); }
 #endif  // USE_DOMOTICZ
