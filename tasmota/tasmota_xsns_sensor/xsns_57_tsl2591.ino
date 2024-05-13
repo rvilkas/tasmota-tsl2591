@@ -47,7 +47,7 @@ void Tsl2591Init(void)
 //  if (I2cSetDevice(0x29) || I2cSetDevice(0x39) || I2cSetDevice(0x49)) {
   if (I2cSetDevice(0x29)) {
     if (tsl.begin()) {
-      tsl.setGain(TSL2591_GAIN_MED);
+      tsl.setGain(TSL2591_GAIN_LOW);
       tsl.setTiming(TSL2591_INTEGRATIONTIME_300MS);
       tsl2591_type = 1;
       I2cSetActiveFound(TSL2591_ADDRESS, "TSL2591");
